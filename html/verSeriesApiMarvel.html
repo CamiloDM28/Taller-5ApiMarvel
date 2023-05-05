@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/estilosMarvel.css">
+    <title>Series</title>
+</head>
+
+<body>
+
+    <script>
+
+        document.write("Series del Personaje");
+
+        var apikey = `1bd40032e656524cafd71b90d41e3a8d`;
+        var ts = `1`;
+        var hash = `fe2fcdfccd557620089c40256d7097be`;
+        var url = `https://gateway.marvel.com:443/v1/public/characters?ts=${ts}&apikey=${apikey}&hash=${hash}`;
+
+        let urlParams = new URLSearchParams(window.location.search);
+        let id = urlParams.get("id");
+        console.log(id);
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+
+                let personajes = data.data.results;
+                let personaje = personajes.find(p => p.id.toString() === id);
+                let arraySeries = personaje.series.items;
+
+                for (let i = 0; i < arraySeries.length; i++) {
+                    let serie = arraySeries[i];
+                    let nombre = serie.name;
+                    let urlSerie = serie.resourceURI;
+                    document.write(nombre + "<br>");
+                    document.write(urlSerie + "<br>"+"<br>");
+                }
+            })
+    </script>
+
+</body>
+
+</html>
